@@ -1,0 +1,16 @@
+﻿{
+  "name": "scbrs-01-site",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev:front",
+    "dev:front": "npm --prefix frontend run dev",
+    "build": "npm run build:front",
+    "build:front": "npm --prefix frontend run build",
+    "preview": "npm run preview:front",
+    "preview:front": "npm --prefix frontend run preview",
+    "dev:back": "npm --prefix backend run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
