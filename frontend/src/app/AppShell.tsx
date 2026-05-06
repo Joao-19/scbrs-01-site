@@ -334,20 +334,26 @@ export function AppShell() {
           >
             <video className="h-[260px] w-full object-cover md:h-[360px]" src="/media/untitled.mp4" autoPlay muted loop playsInline preload="metadata" />
           </motion.div>
+
           <div className="mt-8 space-y-6">
             {landingContent.historia.paragraphs.map((paragraph) => (
-              <motion.p key={paragraph.slice(0, 24)} variants={revealUp} className="max-w-4xl text-muted">
-                {paragraph}
-              </motion.p>
+              <div>
+                <motion.p key={paragraph.slice(0, 24)} variants={revealUp} className="max-w-4xl text-muted">
+                  {paragraph}
+                </motion.p>
+
+                {paragraph === landingContent.historia.paragraphs[2] && (
+                  <motion.blockquote
+                    variants={revealUp}
+                    className="rsi-hover-surface mt-4 max-w-4xl border-l-2 border-primary/60 bg-surface/40 px-5 py-4 italic text-text"
+                    onMouseMove={handleSurfacePointerMove}
+                    onMouseLeave={handleSurfacePointerLeave}
+                  >
+                    {landingContent.historia.quote}
+                  </motion.blockquote>
+                )}
+              </div>
             ))}
-            <motion.blockquote
-              variants={revealUp}
-              className="rsi-hover-surface max-w-4xl border-l-2 border-primary/60 bg-surface/40 px-5 py-4 italic text-text"
-              onMouseMove={handleSurfacePointerMove}
-              onMouseLeave={handleSurfacePointerLeave}
-            >
-              {landingContent.historia.quote}
-            </motion.blockquote>
           </div>
         </motion.div>
       </Section>
