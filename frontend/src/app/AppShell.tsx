@@ -356,7 +356,8 @@ export function AppShell() {
             onMouseLeave={handleHistoriaPointerLeave}
           >
             <video
-              className="absolute inset-0 h-full w-full object-cover object-[center_60%] blur-[2px]"
+              className="absolute inset-0 h-full w-full object-cover blur-[2px]"
+              style={{ objectPosition: 'center 60%' }}
               src={`${base}media/YTDown_YouTube_Space-Earth-Panorama-Background-4K-VJ-Lo_Media_fHjPz0SmZBE_001_1080p.mp4`}
               autoPlay
               muted
@@ -408,7 +409,8 @@ export function AppShell() {
             onMouseLeave={handleSurfacePointerLeave}
           >
             <video
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom object-[center_82.8%]"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: 'center 80%' }}
               src={recruitmentBgVideo}
               autoPlay
               muted
