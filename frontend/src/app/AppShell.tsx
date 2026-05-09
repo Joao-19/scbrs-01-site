@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Section } from '../components/ui/Section'
 import { UiverseButton } from '../components/ui/UiverseButton'
 import { landingContent } from '../content/landingContent'
-import { revealUp, staggerParent } from '../lib/motion'
+import { revealUp, staggerParent, glitchReveal } from '../lib/motion'
 import { useLenis } from '../lib/useLenis'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -58,7 +58,6 @@ export function AppShell() {
 
     const sectionIds = ['hero', 'sobre', 'divisoes', 'historia', 'recrutamento'] as const
     let wheelLocked = false
-    let snapUsed = false
     let wheelAccumulator = 0
     let unlockTimer = 0
 
@@ -90,7 +89,7 @@ export function AppShell() {
       const targetTop = getExactTop(sections[targetIndex])
       const lenis = lenisRef.current
       if (lenis) {
-        lenis.scrollTo(targetTop, { duration: 0.95, lock: true, force: true })
+        lenis.scrollTo(targetTop, { duration: 0.9, lock: true, force: true })
       } else {
         window.scrollTo({ top: targetTop, behavior: 'smooth' })
       }
@@ -98,8 +97,6 @@ export function AppShell() {
     }
 
     const handleWheel = (event: WheelEvent) => {
-      if (snapUsed) return
-
       event.preventDefault()
       event.stopPropagation()
 
@@ -107,7 +104,7 @@ export function AppShell() {
       if (Math.abs(event.deltaY) < 2) return
 
       wheelAccumulator += event.deltaY
-      if (Math.abs(wheelAccumulator) < 52) return
+      if (Math.abs(wheelAccumulator) < 40) return
 
       const direction: 1 | -1 = wheelAccumulator > 0 ? 1 : -1
       const moved = snapToSection(direction)
@@ -115,11 +112,10 @@ export function AppShell() {
       if (!moved) return
 
       wheelLocked = true
-      snapUsed = true
       window.clearTimeout(unlockTimer)
       unlockTimer = window.setTimeout(() => {
         wheelLocked = false
-      }, 760)
+      }, 1100)
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false, capture: true })
@@ -197,6 +193,10 @@ export function AppShell() {
 
   return (
     <main ref={rootRef} className="relative overflow-x-hidden text-text">
+      <header className="fixed left-0 right-0 top-0 z-50 flex items-center px-6 py-4 md:px-10">
+        <img src="/site-logo.png" alt="SCBRS-01" className="h-10 w-auto drop-shadow-[0_0_8px_rgba(91,231,255,0.4)]" />
+      </header>
+
       <motion.div aria-hidden className="pointer-events-none fixed inset-0 -z-10" style={{ opacity: baseOpacity }}>
         <div className="absolute inset-0 bg-[#06090f]" />
         <motion.div
@@ -232,7 +232,7 @@ export function AppShell() {
         <div data-parallax className="absolute left-1/3 top-[70rem] h-64 w-64 rounded-full bg-amber-300/15 blur-[90px]" />
       </div>
 
-      <section id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pb-20 pt-28 md:px-10">
+      <section id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pb-20 pt-28 md:items-end md:pb-28 md:pt-28 md:px-10">
         <div className="pointer-events-none absolute inset-0 opacity-32 [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)]">
           <video className="h-full w-full object-cover" src="/media/untitled.mp4" autoPlay muted loop playsInline preload="metadata" />
         </div>
@@ -325,7 +325,7 @@ export function AppShell() {
               {landingContent.divisoes.items.map((item) => (
                 <motion.article
                   key={item.title}
-                  variants={revealUp}
+                  variants={glitchReveal}
                   className="division-card rsi-hover-surface relative flex min-h-[168px] flex-col justify-start overflow-hidden rounded-2xl border border-white/15 px-6 py-6 pl-8 md:min-h-[142px]"
                   onMouseMove={handleSurfacePointerMove}
                   onMouseLeave={handleSurfacePointerLeave}
@@ -413,7 +413,10 @@ export function AppShell() {
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,9,17,0.48)_0%,rgba(4,9,17,0.62)_100%)]" />
             <div className="relative z-10">
               <p className="font-mono text-xs uppercase tracking-[0.6em] text-primary">{landingContent.recrutamento.tag}</p>
-              <h3 className="mt-3 font-display text-3xl md:text-5xl">{landingContent.recrutamento.title}</h3>
+              <div className="mt-3 flex items-center justify-center gap-4">
+                <h3 className="font-display text-3xl md:text-5xl">{landingContent.recrutamento.title}</h3>
+                <img src="/site-logo.png" alt="" aria-hidden className="h-12 w-auto drop-shadow-[0_0_10px_rgba(91,231,255,0.5)] md:h-16" />
+              </div>
               <p className="mx-auto mt-4 max-w-2xl text-muted">{landingContent.recrutamento.description}</p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <a href={landingContent.recrutamento.discordUrl} target="_blank" rel="noreferrer" className="rounded-xl2 bg-primary px-6 py-3 font-display text-sm font-semibold uppercase tracking-[0.14em] text-slate-950 shadow-glow transition-transform hover:-translate-y-0.5">

@@ -11,6 +11,10 @@ body,
   min-height: 100%;
 }
 
+* {
+  cursor: url('/mouse-icon.png') 0 0, auto;
+}
+
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
