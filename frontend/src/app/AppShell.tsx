@@ -11,7 +11,8 @@ import { useLenis } from '../lib/useLenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const recruitmentBgVideo = '/media/magnific_estacao-espacial-futurist_2925615992%20(1).mp4'
+const base = import.meta.env.BASE_URL
+const recruitmentBgVideo = `${base}media/magnific_estacao-espacial-futurist_2925615992%20(1).mp4`
 
 export function AppShell() {
   const lenisRef = useLenis()
@@ -22,6 +23,11 @@ export function AppShell() {
   const phaseTwoOpacity = useTransform(scrollYProgress, [0.15, 0.45, 0.75], [0.14, 0.92, 0.42])
   const phaseThreeOpacity = useTransform(scrollYProgress, [0.55, 0.82, 1], [0.1, 0.78, 1])
   const gridOpacity = useTransform(scrollYProgress, [0, 0.4, 1], [0.15, 0.1, 0.06])
+
+  useEffect(() => {
+    document.documentElement.style.cursor = `url('${base}mouse-icon.png') 0 0, auto`
+    return () => { document.documentElement.style.cursor = '' }
+  }, [])
 
   useEffect(() => {
     if (!rootRef.current) return
@@ -194,7 +200,7 @@ export function AppShell() {
   return (
     <main ref={rootRef} className="relative overflow-x-hidden text-text">
       <header className="fixed left-0 right-0 top-0 z-50 flex items-center px-6 py-4 md:px-10">
-        <img src="/site-logo.png" alt="SCBRS-01" className="h-10 w-auto drop-shadow-[0_0_8px_rgba(91,231,255,0.4)]" />
+        <img src={`${base}site-logo.png`} alt="SCBRS-01" className="h-10 w-auto drop-shadow-[0_0_8px_rgba(91,231,255,0.4)]" />
       </header>
 
       <motion.div aria-hidden className="pointer-events-none fixed inset-0 -z-10" style={{ opacity: baseOpacity }}>
@@ -234,7 +240,7 @@ export function AppShell() {
 
       <section id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pb-20 pt-28 md:items-end md:pb-28 md:pt-28 md:px-10">
         <div className="pointer-events-none absolute inset-0 opacity-32 [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)]">
-          <video className="h-full w-full object-cover" src="/media/untitled.mp4" autoPlay muted loop playsInline preload="metadata" />
+          <video className="h-full w-full object-cover" src={`${base}media/untitled.mp4`} autoPlay muted loop playsInline preload="metadata" />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_75%_18%,rgba(28,128,214,0.18),transparent_42%),radial-gradient(circle_at_24%_30%,rgba(18,150,178,0.12),transparent_42%)]" />
 
@@ -299,19 +305,19 @@ export function AppShell() {
             className="pilares-bg-base pointer-events-none absolute inset-0"
             style={{
               backgroundImage:
-                "linear-gradient(180deg, rgba(4,8,18,0.56) 0%, rgba(5,10,20,0.76) 100%), url('/media/rsi/cyberpunk-bg.png')",
+                `linear-gradient(180deg, rgba(4,8,18,0.56) 0%, rgba(5,10,20,0.76) 100%), url('${base}media/rsi/cyberpunk-bg.png')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           />
           <img
-            src="/media/rsi/cyberpunk-decors.png"
+            src={`${base}media/rsi/cyberpunk-decors.png`}
             alt=""
             aria-hidden
             className="pilares-bg-decors pointer-events-none absolute inset-0 h-full w-full object-cover"
           />
           <img
-            src="/media/rsi/cyberpunk-character.png"
+            src={`${base}media/rsi/cyberpunk-character.png`}
             alt=""
             aria-hidden
             className="pilares-bg-character pointer-events-none absolute inset-0 h-full w-full object-contain"
@@ -351,7 +357,7 @@ export function AppShell() {
           >
             <video
               className="absolute inset-0 h-full w-full object-cover object-[center_60%] blur-[2px]"
-              src="/media/YTDown_YouTube_Space-Earth-Panorama-Background-4K-VJ-Lo_Media_fHjPz0SmZBE_001_1080p.mp4"
+              src={`${base}media/YTDown_YouTube_Space-Earth-Panorama-Background-4K-VJ-Lo_Media_fHjPz0SmZBE_001_1080p.mp4`}
               autoPlay
               muted
               loop
@@ -360,7 +366,7 @@ export function AppShell() {
             />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,9,17,0.18)_0%,rgba(4,9,17,0.42)_100%)]" />
             <img
-              src="/media/magnific_mantenha-totalmente-a-ima_2952736838.png"
+              src={`${base}media/magnific_mantenha-totalmente-a-ima_2952736838.png`}
               alt=""
               aria-hidden
               className="historia-station pointer-events-none absolute inset-0 h-full w-full object-contain object-left"
@@ -415,7 +421,7 @@ export function AppShell() {
               <p className="font-mono text-xs uppercase tracking-[0.6em] text-primary">{landingContent.recrutamento.tag}</p>
               <div className="mt-3 flex items-center justify-center gap-4">
                 <h3 className="font-display text-3xl md:text-5xl">{landingContent.recrutamento.title}</h3>
-                <img src="/site-logo.png" alt="" aria-hidden className="h-12 w-auto drop-shadow-[0_0_10px_rgba(91,231,255,0.5)] md:h-16" />
+                <img src={`${base}site-logo.png`} alt="" aria-hidden className="h-12 w-auto drop-shadow-[0_0_10px_rgba(91,231,255,0.5)] md:h-16" />
               </div>
               <p className="mx-auto mt-4 max-w-2xl text-muted">{landingContent.recrutamento.description}</p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
