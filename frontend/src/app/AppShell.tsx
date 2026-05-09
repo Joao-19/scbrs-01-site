@@ -163,6 +163,23 @@ export function AppShell() {
     element.style.setProperty('--ry', '0')
   }
 
+  const handleHistoriaPointerMove = (event: ReactMouseEvent<HTMLElement>) => {
+    handleSurfacePointerMove(event)
+    const element = event.currentTarget
+    const bounds = element.getBoundingClientRect()
+    const rx = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2
+    const ry = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2
+    element.style.setProperty('--rx', rx.toFixed(4))
+    element.style.setProperty('--ry', ry.toFixed(4))
+  }
+
+  const handleHistoriaPointerLeave = (event: ReactMouseEvent<HTMLElement>) => {
+    handleSurfacePointerLeave(event)
+    const element = event.currentTarget
+    element.style.setProperty('--rx', '0')
+    element.style.setProperty('--ry', '0')
+  }
+
   const scrollToSection = (sectionId: 'sobre' | 'recrutamento') => {
     const target = document.getElementById(sectionId)
     if (!target) return
@@ -328,11 +345,26 @@ export function AppShell() {
           <motion.h3 variants={revealUp} className="mt-3 font-display text-3xl md:text-4xl">{landingContent.historia.title}</motion.h3>
           <motion.div
             variants={revealUp}
-            className="rsi-hover-surface mt-8 overflow-hidden rounded-3xl border border-white/10 bg-surface/40"
-            onMouseMove={handleSurfacePointerMove}
-            onMouseLeave={handleSurfacePointerLeave}
+            className="rsi-hover-surface relative mt-8 h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-surface/40 md:h-[360px]"
+            onMouseMove={handleHistoriaPointerMove}
+            onMouseLeave={handleHistoriaPointerLeave}
           >
-            <video className="h-[260px] w-full object-cover md:h-[360px]" src="/media/untitled.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <video
+              className="absolute inset-0 h-full w-full object-cover object-[center_60%] blur-[2px]"
+              src="/media/YTDown_YouTube_Space-Earth-Panorama-Background-4K-VJ-Lo_Media_fHjPz0SmZBE_001_1080p.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,9,17,0.18)_0%,rgba(4,9,17,0.42)_100%)]" />
+            <img
+              src="/media/magnific_mantenha-totalmente-a-ima_2952736838.png"
+              alt=""
+              aria-hidden
+              className="historia-station pointer-events-none absolute inset-0 h-full w-full object-contain object-left"
+            />
           </motion.div>
 
           <div className="mt-8 space-y-6">
@@ -359,39 +391,38 @@ export function AppShell() {
       </Section>
 
       <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-32 [mask-image:linear-gradient(to_bottom,black_0%,black_88%,transparent_100%)]">
-          <video
-            className="h-full w-full object-cover"
-            src={recruitmentBgVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-        </div>
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,9,17,0.52)_0%,rgba(4,9,17,0.66)_48%,rgba(4,9,17,0.82)_100%)]" />
-
         <Section id="recrutamento" className="relative pb-20 pt-10">
           <motion.div
             variants={revealUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="rsi-hover-surface rounded-3xl border border-primary/30 bg-[linear-gradient(120deg,rgba(91,231,255,0.12),rgba(123,140,255,0.12),rgba(255,184,107,0.08))] p-8 text-center shadow-glow"
+            className="rsi-hover-surface relative overflow-hidden rounded-3xl border border-primary/30 p-8 text-center shadow-glow"
             onMouseMove={handleSurfacePointerMove}
             onMouseLeave={handleSurfacePointerLeave}
           >
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">{landingContent.recrutamento.tag}</p>
-            <h3 className="mt-3 font-display text-3xl md:text-5xl">{landingContent.recrutamento.title}</h3>
-            <p className="mx-auto mt-4 max-w-2xl text-muted">{landingContent.recrutamento.description}</p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a href={landingContent.recrutamento.discordUrl} target="_blank" rel="noreferrer" className="rounded-xl2 bg-primary px-6 py-3 font-display text-sm font-semibold uppercase tracking-[0.14em] text-slate-950 shadow-glow transition-transform hover:-translate-y-0.5">
-                {landingContent.recrutamento.discordCta}
-              </a>
-              <a href={landingContent.recrutamento.rsiUrl} target="_blank" rel="noreferrer" className="rounded-xl2 border border-white/20 bg-surface px-6 py-3 font-display text-sm uppercase tracking-[0.14em] text-text transition-colors hover:border-primary/60">
-                {landingContent.recrutamento.rsiCta}
-              </a>
+            <video
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom object-[center_83%]"
+              src={recruitmentBgVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,9,17,0.48)_0%,rgba(4,9,17,0.62)_100%)]" />
+            <div className="relative z-10">
+              <p className="font-mono text-xs uppercase tracking-[0.6em] text-primary">{landingContent.recrutamento.tag}</p>
+              <h3 className="mt-3 font-display text-3xl md:text-5xl">{landingContent.recrutamento.title}</h3>
+              <p className="mx-auto mt-4 max-w-2xl text-muted">{landingContent.recrutamento.description}</p>
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <a href={landingContent.recrutamento.discordUrl} target="_blank" rel="noreferrer" className="rounded-xl2 bg-primary px-6 py-3 font-display text-sm font-semibold uppercase tracking-[0.14em] text-slate-950 shadow-glow transition-transform hover:-translate-y-0.5">
+                  {landingContent.recrutamento.discordCta}
+                </a>
+                <a href={landingContent.recrutamento.rsiUrl} target="_blank" rel="noreferrer" className="rounded-xl2 border border-white/20 bg-surface px-6 py-3 font-display text-sm uppercase tracking-[0.14em] text-text transition-colors hover:border-primary/60">
+                  {landingContent.recrutamento.rsiCta}
+                </a>
+              </div>
             </div>
           </motion.div>
         </Section>

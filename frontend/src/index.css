@@ -387,9 +387,9 @@ body {
 }
 
 .pilares-bg-decors {
-  opacity: 0.2;
+  opacity: 0.09;
   mix-blend-mode: screen;
-  transform: translate3d(calc(var(--rx) * 8px), calc(var(--ry) * -8px), 0) scale(1.03);
+  transform: translate3d(calc(var(--rx) * -6px), calc(var(--ry) * -4px), 0) scale(1.03);
 }
 
 .pilares-bg-character {
@@ -398,6 +398,12 @@ body {
   transform: translate3d(calc(var(--rx) * -14px), calc(var(--ry) * 12px), 0) scale(0.76);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 22%, black 44%, black 100%);
   mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 22%, black 44%, black 100%);
+}
+
+.historia-station {
+  transition: transform 240ms ease-out;
+  will-change: transform;
+  transform: translate3d(calc(var(--rx, 0) * -18px), calc(var(--ry, 0) * -10px), 0);
 }
 
 .nebula-drift {
