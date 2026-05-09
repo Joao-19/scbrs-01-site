@@ -402,7 +402,7 @@ export function AppShell() {
             onMouseLeave={handleSurfacePointerLeave}
           >
             <video
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom object-[center_83%]"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom object-[center_82.8%]"
               src={recruitmentBgVideo}
               autoPlay
               muted

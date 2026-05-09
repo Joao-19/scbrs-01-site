@@ -17,6 +17,10 @@ frontend/dist/
 frontend/dist-ssr/
 frontend/.vite/
 
+# Large media files (>100MB, incompatível com GitHub)
+*.webm
+frontend/public/media/YTDown_*.mp4
+
 # IDE
 .vscode/
 .idea/
